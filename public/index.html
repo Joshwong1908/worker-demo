@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Worker Demo · 运行在 Cloudflare 边缘</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #052e16, #14532d, #1e3a8a);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .badge {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-size: 14px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(10px);
+  }
+  .badge .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #facc15;
+    margin-right: 8px;
+    box-shadow: 0 0 12px #facc15;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    text-align: center;
+    margin-bottom: 14px;
+    background: linear-gradient(90deg, #fde047, #86efac, #7dd3fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  p.sub {
+    color: rgba(255,255,255,.65);
+    text-align: center;
+    max-width: 620px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+  .api-box {
+    width: 100%;
+    max-width: 640px;
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 36px;
+  }
+  .api-box h2 {
+    font-size: 15px;
+    color: #fde047;
+    margin-bottom: 12px;
+    font-family: ui-monospace, monospace;
+  }
+  .api-box pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #a5f3fc;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  button {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #eab308, #22c55e);
+    color: #052e16;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform .2s ease;
+  }
+  button:hover { transform: translateY(-2px); }
+  footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,.4);
+  }
+</style>
+</head>
+<body>
+  <div class="badge"><span class="dot"></span>运行在 Cloudflare Workers 边缘节点</div>
+  <h1>⚡ Workers 全栈 Demo</h1>
+  <p class="sub">
+    这个页面是静态资源（前端），下面调用的 /api/time 是边缘函数（后端）。<br/>
+    两者打包在同一个 Worker 里，push 到 GitHub 即自动部署。
+  </p>
+  <div class="api-box">
+    <h2>GET /api/time</h2>
+    <pre id="output">点击按钮调用本 Worker 的后端 API…</pre>
+  </div>
+  <button onclick="callApi()">调用 API</button>
+  <footer>git push → GitHub → Cloudflare 自动构建部署</footer>
+<script>
+  async function callApi() {
+    const out = document.getElementById('output');
+    out.textContent = '请求中…';
+    try {
+      const res = await fetch('/api/time');
+      const data = await res.json();
+      out.textContent = JSON.stringify(data, null, 2);
+    } catch (e) {
+      out.textContent = '请求失败: ' + e.message;
+    }
+  }
+</script>
+</body>
+</html>
