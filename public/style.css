@@ -158,3 +158,49 @@ body {
 
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
+
+/* ---------- 文档页 ---------- */
+#page-docs { overflow: hidden; }
+.docs-wrap { flex: 1; min-height: 0; display: flex; gap: 0; }
+.docs-toc {
+  width: 200px; flex-shrink: 0; padding: 24px 16px;
+  border-right: 1px solid var(--border); overflow-y: auto;
+}
+.docs-toc h3 { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.toc-link {
+  display: block; padding: 7px 10px; margin-bottom: 2px; border-radius: 8px;
+  color: var(--muted); text-decoration: none; font-size: 13px;
+}
+.toc-link:hover { background: var(--panel-2); color: var(--text); }
+.docs-content { flex: 1; overflow-y: auto; padding: 32px 48px 80px; max-width: 860px; }
+.docs-content h1 {
+  font-size: 26px; margin-bottom: 8px;
+  background: var(--accent);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.docs-content .lead { color: var(--muted); margin-bottom: 28px; font-size: 14px; }
+.docs-content h2 {
+  font-size: 17px; margin: 32px 0 12px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.docs-content p { font-size: 14px; line-height: 1.8; color: #cbd5e1; margin-bottom: 10px; }
+.docs-content ul, .docs-content ol { padding-left: 22px; margin-bottom: 12px; }
+.docs-content li { font-size: 14px; line-height: 1.9; color: #cbd5e1; }
+.docs-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px;
+  background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: 5px; padding: 1px 6px; color: #a5b4fc;
+}
+.docs-content pre {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0 16px; overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px;
+  line-height: 1.7; color: #a5b4fc; white-space: pre;
+}
+.inline-link { color: #7dd3fc; text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
+.api-table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; }
+.api-table th { text-align: left; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.api-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: #cbd5e1; }
+.api-table td:first-child { color: #7dd3fc; font-family: ui-monospace, monospace; white-space: nowrap; }
+@media (max-width: 700px) { .docs-toc { display: none; } .docs-content { padding: 24px 20px 60px; } }

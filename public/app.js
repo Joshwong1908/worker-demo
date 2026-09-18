@@ -65,9 +65,16 @@ document.querySelectorAll('.tab').forEach((btn) => {
   btn.onclick = () => {
     state.tab = btn.dataset.tab;
     document.querySelectorAll('.tab').forEach((b) => b.classList.toggle('active', b === btn));
-    $('#page-chat').classList.toggle('active', state.tab === 'chat');
-    $('#page-workflows').classList.toggle('active', state.tab === 'workflows');
+    document.querySelectorAll('.page').forEach((p) => p.classList.toggle('active', p.id === 'page-' + state.tab));
     if (state.tab === 'workflows') loadWorkflows();
+  };
+});
+
+/* ================= 文档页目录 ================= */
+document.querySelectorAll('.toc-link').forEach((a) => {
+  a.onclick = (e) => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
   };
 });
 
